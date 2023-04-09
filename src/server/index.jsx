@@ -1,5 +1,13 @@
 import express from "express";
 import { resolve } from "path";
+import { renderToPipeableStream } from "react-server-dom-webpack/server";
+import { Server } from "../react/Server";
+
+const manifest = readFileSync(
+  path.resolve(__dirname, "../react/react-client-manifest.json"),
+  "utf8"
+);
+const moduleMap = JSON.parse(manifest);
 
 const app = express();
 
@@ -16,6 +24,13 @@ app.get("/", async (req, res) => {
   // });
 
   res.sendFile(resolve(__dirname, "../../public/index.html"));
+});
+
+app.get("/rsc", (req, res) => {
+  // I'm not sure I'm sending
+  // the right thing here
+  const { pipe } = renderToPipeableStream(<Server />, moduleMap);
+  pipe(res);
 });
 
 app.listen(3000, () => {

@@ -1,4 +1,5 @@
 const path = require("path");
+const ReactServerWebpackPlugin = require("react-server-dom-webpack/plugin");
 
 const sharedConfig = {
   module: {
@@ -14,6 +15,7 @@ const sharedConfig = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
+    conditionNames: ["react-server"],
   },
   mode: process.env.NODE_ENV,
   plugins: [],
@@ -29,6 +31,7 @@ const reactConfig = {
     clean: true,
   },
   target: "web",
+  plugins: [new ReactServerWebpackPlugin({ isServer: false })],
 };
 
 const serverConfig = {

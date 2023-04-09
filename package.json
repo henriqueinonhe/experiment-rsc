@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development npx webpack --config webpack.config.js &&  NODE_ENV=development npx concurrently -c yellow,blue -n Compiler,Server \"webpack --watch --config webpack.config.js\"  \"node --watch dist/server/index.js\"",
+    "dev": "NODE_ENV=development npx webpack --config webpack.config.js && NODE_ENV=development npx concurrently -c yellow,blue -n Compiler,Server \"webpack --watch --config webpack.config.js\" \"node --watch dist/server/index.js \"",
     "start": "NODE_ENV=production webpack --config webpack.config.js && node dist/server/index.js"
   },
   "keywords": [],
