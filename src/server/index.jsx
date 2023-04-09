@@ -2,9 +2,10 @@ import express from "express";
 import { resolve } from "path";
 import { renderToPipeableStream } from "react-server-dom-webpack/server";
 import { Server } from "../react/Server";
+import { readFileSync } from "fs";
 
 const manifest = readFileSync(
-  path.resolve(__dirname, "../react/react-client-manifest.json"),
+  resolve(__dirname, "../react/react-client-manifest.json"),
   "utf8"
 );
 const moduleMap = JSON.parse(manifest);

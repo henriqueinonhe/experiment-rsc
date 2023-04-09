@@ -1,3 +1,11 @@
+// import { Client } from "./Client";
+
 export const Server = async () => {
-  return <>From Server</>;
+  return (
+    <>
+      <div>From Server</div>
+
+      {/* <Client /> */}
+    </>
+  );
 };

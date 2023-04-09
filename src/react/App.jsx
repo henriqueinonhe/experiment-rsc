@@ -1,11 +1,13 @@
-import { useRef, use } from "react";
+"use client";
+
+import { use } from "react";
 import { createFromFetch } from "react-server-dom-webpack/client";
 
 const reactFetch = () => createFromFetch(fetch("/rsc"));
+const serverElementPromise = reactFetch();
 
 export const App = () => {
-  const contentRef = useRef(reactFetch());
-  const serverElement = use(contentRef.current);
+  const serverElement = use(serverElementPromise);
 
   return (
     <>

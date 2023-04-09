@@ -1,5 +1,6 @@
 const path = require("path");
 const ReactServerWebpackPlugin = require("react-server-dom-webpack/plugin");
+const { merge } = require("webpack-merge");
 
 const sharedConfig = {
   module: {
@@ -15,14 +16,15 @@ const sharedConfig = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
-    conditionNames: ["react-server"],
   },
   mode: process.env.NODE_ENV,
-  plugins: [],
+  optimization: {
+    minimize: false,
+  },
+  devtool: false,
 };
 
-const reactConfig = {
-  ...sharedConfig,
+const reactConfig = merge(sharedConfig, {
   entry: {
     index: "./src/react/index.jsx",
   },
@@ -31,10 +33,18 @@ const reactConfig = {
     clean: true,
   },
   target: "web",
-  plugins: [new ReactServerWebpackPlugin({ isServer: false })],
-};
+  plugins: [
+    new ReactServerWebpackPlugin({
+      isServer: false,
+      // clientReferences: {
+      //   directory: path.resolve(__dirname, "dist/react"),
+      //   recursive: true,
+      // },
+    }),
+  ],
+});
 
-const serverConfig = {
+const serverConfig = merge(sharedConfig, {
   ...sharedConfig,
   entry: {
     index: "./src/server/index.jsx",
@@ -44,6 +54,9 @@ const serverConfig = {
     clean: true,
   },
   target: "node",
-};
+  resolve: {
+    conditionNames: ["node", "react-server"],
+  },
+});
 
 module.exports = [reactConfig, serverConfig];
